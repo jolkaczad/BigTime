@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<data>
+    <np_poi>
+        <name>Our house</name>
+        <lat>31.221598610082765</lat>
+        <lng>121.48234391526827</lng>
+        <description>
+            We live here
+        </description>
+    </np_poi>
+
+    <np_poi>
+        <name>My office</name>
+        <lat>31.213306624571516</lat>
+        <lng>121.59113320405415</lng>
+        <description>
+            I work here
+        </description>
+    </np_poi>
+
+    <np_poi>
+        <name>The school</name>
+        <lat>31.22688301648287</lat>
+        <lng>121.47622196321777</lng>
+        <description>
+            Mandarin city
+        </description>
+    </np_poi>
+</data>
