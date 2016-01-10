@@ -1,8 +1,11 @@
 package com.example.w.baidumaps_test4;
 
+import android.content.Context;
+import android.content.res.XmlResourceParser;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -15,6 +18,12 @@ import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    /**
+     * L0 means level 0 tag. All purpose
+     */
+    static final String TAG = "L0";
+    static final String TAG_XML = "L_XML";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +49,15 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        /**
+         * Start initializing the application
+         */
+        XmlResourceParser xpp = this.getResources().getXml(R.xml.points1);
+        NpPointsFromXML npPoints = new NpPointsFromXML(xpp);
+
+        Log.d(TAG, "LOG:");
+        Log.d(TAG, npPoints.toString());
     }
 
     @Override
@@ -80,9 +98,7 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_map) {
+        if (id == R.id.nav_map) {
 
         } else if (id == R.id.nav_database) {
 
