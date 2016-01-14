@@ -4,10 +4,15 @@
     android:layout_height="match_parent"
     tools:context="com.example.w.baidumaps_test45.PointListFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Hello point list fragment" />
-
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scrollbars="none">
+        <TableLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:stretchColumns="0,1"
+            android:id="@+id/maintable" >
+        </TableLayout>
+    </ScrollView>
 </RelativeLayout>
