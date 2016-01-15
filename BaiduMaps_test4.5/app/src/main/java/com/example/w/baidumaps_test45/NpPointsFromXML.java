@@ -13,7 +13,7 @@ import java.util.ListIterator;
 /**
  * Created by WL on 10-sty-2016
  * <p>
- * Version 1.0
+ * Version 1.1
  */
 public class NpPointsFromXML implements GetNpPoints{
 
@@ -36,12 +36,10 @@ public class NpPointsFromXML implements GetNpPoints{
          * Import data from XML resource into an ArrayList
          */
         int eventType = 0;
-        int line;
         try {
             eventType = xpp.getEventType();
             String tag_name = "";
             while (eventType != XmlPullParser.END_DOCUMENT) {
-                line = xpp.getLineNumber();
                 if (eventType == XmlPullParser.START_TAG) {
                     tag_name = xpp.getName();
 
@@ -60,6 +58,8 @@ public class NpPointsFromXML implements GetNpPoints{
                     } else if (tag_name.equals("description")) {
                         npPoint_tmp.description = xpp.getText();
                         npPoint_tmp.description.replace("\n", "");
+                    } else if(tag_name.equals("type")) {
+                        npPoint_tmp.type = Integer.valueOf(xpp.getText());
                     }
                 } else if (eventType == XmlPullParser.END_TAG) {
                     if (xpp.getName().equals("np_poi")) {

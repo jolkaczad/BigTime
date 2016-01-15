@@ -1,6 +1,7 @@
 package com.example.w.baidumaps_test45;
 
 
+import android.app.ActionBar;
 import android.content.res.XmlResourceParser;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -8,10 +9,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ScrollView;
+import android.widget.CheckBox;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+
+import java.util.ArrayList;
 
 
 /**
@@ -66,23 +69,37 @@ public class PointListFragment extends Fragment {
         TableRow tr;
         TextView tv1, tv2;
 
+        CheckBox checkBox;
+        ArrayList<CheckBox> checkBoxArrayList = new ArrayList<>();
+
         npPointsFromXML.rewind();
         for (int i = 0; i < npPointsFromXML.getPointCount(); i++){
             tr = new TableRow(getActivity());
             tr.setLayoutParams(new TableLayout.LayoutParams(
-                    TableLayout.LayoutParams.FILL_PARENT,
+                    TableLayout.LayoutParams.MATCH_PARENT,
                     TableLayout.LayoutParams.WRAP_CONTENT));
 
             tv1 = new TextView(getActivity());
+//            tr.
 
             NpPoint npPoint = npPointsFromXML.getNextItem();
             if (npPoint != null) {
                 tv1.setText(npPoint.name);
                 tr.addView(tv1);
+//                tv.setw
+
+//                ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+//                params.
+//                tv1.setLayoutParams(params);
 
                 tv2 = new TextView(getActivity());
                 tv2.setText(npPoint.description);
+
                 tr.addView(tv2);
+
+                checkBox = new CheckBox(getActivity());
+                tr.addView(checkBox);
+                checkBoxArrayList.add(checkBox);
 
                 tl.addView(tr);
             }

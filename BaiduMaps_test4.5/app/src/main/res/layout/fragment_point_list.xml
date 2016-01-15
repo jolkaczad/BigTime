@@ -11,7 +11,8 @@
         <TableLayout
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:stretchColumns="0,1"
+            android:stretchColumns="0,1,2"
+            android:shrinkColumns="0,1,2"
             android:id="@+id/maintable" >
         </TableLayout>
     </ScrollView>
