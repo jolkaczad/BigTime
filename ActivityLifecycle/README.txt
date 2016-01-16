@@ -24,6 +24,8 @@ III. LESSONS LEARNED
     Activity is destroyed when:
         - Back button is pressed
         - Screen is rotated
+
+    Widget states are not saved when object is destroyed
     1.
     Application is first started, functions are called in order:
         - Constructor
