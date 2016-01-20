@@ -1,5 +1,6 @@
 package com.example.w.baidumaps_test46;
 
+import android.content.res.XmlResourceParser;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -11,13 +12,19 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.CheckBox;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -126,8 +133,16 @@ public class MainActivity extends AppCompatActivity {
          * fragment.
          */
         private static final String ARG_SECTION_NUMBER = "section_number";
+        TableLayout tl;
+
+        ArrayList<CheckBox> checkBoxArrayList;
+        View view;
+        public NpPointsFromXML npPointsFromXML = null;
+        static final String TAG = "L1";
+
 
         public PointsListFragment() {
+
         }
 
         /**
@@ -145,10 +160,67 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_pointslist, container, false);
-//            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-//            textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
-            return rootView;
+//            View rootView = inflater.inflate(R.layout.fragment_pointslist, container, false);
+//            return rootView;
+            XmlResourceParser xpp = this.getResources().getXml(R.xml.points1);
+            npPointsFromXML = new NpPointsFromXML(xpp);
+
+            Log.d(TAG, "LOG:");
+            Log.d(TAG, npPointsFromXML.toString());
+
+            // Inflate the layout for this fragment
+            view = inflater.inflate(R.layout.fragment_pointslist, container, false);
+
+            tl = (TableLayout) view.findViewById(R.id.maintable);
+
+            TableRow tr;
+            TextView tv1, tv2;
+
+            CheckBox checkBox;
+
+            boolean restored;
+
+            if (checkBoxArrayList == null){
+                restored = false;
+                checkBoxArrayList = new ArrayList<>();
+            }
+            else {
+                restored = true;
+            }
+            npPointsFromXML.rewind();
+            for (int i = 0; i < npPointsFromXML.getPointCount(); i++){
+                tr = new TableRow(getActivity());
+                tr.setLayoutParams(new TableLayout.LayoutParams(
+                        TableLayout.LayoutParams.MATCH_PARENT,
+                        TableLayout.LayoutParams.WRAP_CONTENT));
+
+                tv1 = new TextView(getActivity());
+
+                NpPoint npPoint = npPointsFromXML.getNextItem();
+                if (npPoint != null) {
+                    tv1.setText(npPoint.name);
+                    tr.addView(tv1);
+
+                    tv2 = new TextView(getActivity());
+                    tv2.setText(npPoint.description);
+
+                    tr.addView(tv2);
+
+                    if (restored == false){
+
+                        checkBox = new CheckBox(getActivity());
+                        checkBoxArrayList.add(checkBox);
+                    }
+                    else {
+                        checkBox = checkBoxArrayList.get(i);
+                    }
+
+                    tr.addView(checkBox);
+                    tl.addView(tr);
+                }
+            }
+
+            return view;
         }
     }
 
@@ -181,7 +253,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            // Show 3 total pages.
+            // Show 2 total pages.
             return 2;
         }
 
@@ -189,9 +261,9 @@ public class MainActivity extends AppCompatActivity {
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "SECTION 1";
+                    return "NAVIGATE";
                 case 1:
-                    return "SECTION 2";
+                    return "SELECT";
             }
             return null;
         }

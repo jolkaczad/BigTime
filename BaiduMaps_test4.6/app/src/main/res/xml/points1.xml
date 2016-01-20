@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+<!--
+    allowed <type>s:
+    100 - generic/other (A)
+    101 - restaurant, eatery or bar (B)
+    102 - scenic spot, landmark or photo op (C)
+    103 - transport (D)
+    104 - hotel, accommodation (E)
+    105 - company or institution (F)
+-->
+<data>
+    <np_poi>
+        <name>Our house</name>
+        <lat>31.221598610082765</lat>
+        <lng>121.48234391526827</lng>
+        <description>We live here</description>
+        <type>104</type>
+    </np_poi>
+
+    <np_poi>
+        <name>My office</name>
+        <lat>31.213306624571516</lat>
+        <lng>121.59113320405415</lng>
+        <description>I work here</description>
+        <type>105</type>
+    </np_poi>
+
+    <np_poi>
+        <name>The school</name>
+        <lat>31.22688301648287</lat>
+        <lng>121.47622196321777</lng>
+        <description>Mandarin city</description>
+        <type>105</type>
+    </np_poi>
+
+    <np_poi>
+        <name>Shanghai Brewery</name>
+        <lat>31.214921148715693</lat>
+        <lng>121.45557818395406</lng>
+        <description></description>
+        <type>101</type>
+    </np_poi>
+    <np_poi>
+        <name>Shanghai Library station</name>
+        <lat>31.21438454701285</lat>
+        <lng>121.45063301212164</lng>
+        <description>Shanghai Library metro st.</description>
+        <type>103</type>
+    </np_poi>
+    <np_poi>
+        <name>Stephanie's house</name>
+        <lat>31.22650173087996</lat>
+        <lng>121.43917063381431</lng>
+        <description>Stephanie lives here</description>
+        <type>100</type>
+    </np_poi>
+    <np_poi>
+        <name>Jing'An temple</name>
+        <lat>31.230531437393374</lat>
+        <lng>121.45284284367618</lng>
+        <description>Temple in city center</description>
+        <type>102</type>
+    </np_poi>
+    <np_poi>
+        <name>People's Park</name>
+        <lat>31.238080880121867</lat>
+        <lng>121.47963031398372</lng>
+        <description>Popular park in Shanghai</description>
+        <type>102</type>
+    </np_poi>
+    <np_poi>
+        <name>Shanghai world expo</name>
+        <lat>31.1921842998602</lat>
+        <lng>121.49448379559121</lng>
+        <description>The site of the world expo in 2010</description>
+        <type>102</type>
+    </np_poi>
+</data>
