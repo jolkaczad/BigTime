@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -18,6 +19,7 @@ public class Main extends AppCompatActivity {
 
     private TableLayout tl;
     Bout bout;
+    Button button;
 
     static final String TAG = "BIGTIME_LOG";
 
@@ -37,53 +39,24 @@ public class Main extends AppCompatActivity {
             }
         });
 
-        tl = (TableLayout) findViewById(R.id.rounds_list);
-
-        /* Define the listener for adding rounds */
-        View.OnClickListener handleAdd = new View.OnClickListener() {
+        /* Define the listener for creating bout and starting timer */
+        View.OnClickListener go = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Bout.Round round = bout.addRound(getApplicationContext(), v);
+                int roundTime = Integer.parseInt(((EditText)findViewById(R.id.roundTimeET)).getText().toString());
+                int restTime = Integer.parseInt(((EditText)findViewById(R.id.restTimeET)).getText().toString());
+                int roundCount = Integer.parseInt(((EditText)findViewById(R.id.roundCountET)).getText().toString());
 
-                TableRow row = new TableRow(getApplicationContext());
-                row.addView(round.tv);
+                bout = new Bout(roundTime, restTime, roundCount);
 
-                round.addButton.setOnClickListener(this);
-                row.addView(round.addButton);
-                tl.addView(row, 0);
+                TextView tv = (EditText)findViewById(R.id.totalET);
+
+                tv.setText(String.valueOf(bout.getBoutTime()));
             }
         };
 
-        /* Define the listener for removing rounds */
-        View.OnClickListener handleRemove = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                TextView tv = new TextView(getApplicationContext());
-                tv.setText("Text View");
-
-                Button addButton = new Button(getApplicationContext());
-                addButton.setText("Add");
-                addButton.setOnClickListener(this);
-
-                TableRow row = new TableRow(getApplicationContext());
-                row.addView(tv);
-                row.addView(addButton);
-                tl.addView(row, tl.getChildCount());
-            }
-        };
-
-        /* Add initial round row */
-        bout = new Bout(this);
-        Bout.Round round = bout.getRound(0);
-
-        TableRow row = new TableRow(this);
-        row.addView(round.tv);
-
-        round.addButton.setOnClickListener(handleAdd);
-        row.addView(round.addButton);
-        tl.addView(row, 0);
-
-
+        button = (Button)findViewById(R.id.button);
+        button.setOnClickListener(go);
     }
 
     @Override

@@ -12,65 +12,63 @@ import android.util.Log;
 /**
  * Created by WL on 24-cze-2016
  * <p/>
- * Version 1.0
+ * Version 1.1
  */
 public class Bout {
     static final String TAG = "BIGTIME_LOG";
 
     private int rounds = 0;
-    private ArrayList<Round> roundArrayList;
+    private ArrayList<Period> periodArrayList;
 
-    public Bout (Context context){
-        roundArrayList = new ArrayList<>();
-        addRound(context, 0);
+    public Bout (int roundTime, int restTime, int roundCount) {
+        periodArrayList = new ArrayList<>();
+
+        for (int i = 0; i < (roundCount - 1); i++){
+            Period roundPeriod = new Period(roundTime, Period.ROUND);
+            Period restPeriod = new Period(restTime, Period.REST);
+
+            periodArrayList.add(roundPeriod);
+            periodArrayList.add(restPeriod);
+        }
+        Period roundPeriod = new Period(roundTime, Period.ROUND);
+        periodArrayList.add(roundPeriod);
     }
 
-    public Round addRound (Context context, int index){
-        Round r = new Round(context, String.valueOf(rounds));
-        rounds++;
+    public int getBoutTime (){
+        int total = 0;
 
-        roundArrayList.add(index, r);
+        ListIterator<Period> li = periodArrayList.listIterator();
+        while(li.hasNext()){
+            Period round = li.next();
 
-        return r;
-    }
-
-    public Round addRound (Context context, View v){
-        int index = findIdByAddButton(v);
-        Log.d(TAG, "findIdByAddButton: " + String.valueOf(index));
-
-        return addRound(context, index);
-    }
-
-    public Round getRound(int index){
-        return roundArrayList.get(index);
-    }
-
-    public int findIdByAddButton(View v){
-        ListIterator<Round> litr = roundArrayList.listIterator();
-        while(litr.hasNext()){
-            Round round = litr.next();
-
-            if (round.addButton == v){
-                return litr.previousIndex();
-            }
+            total += round.duration;
         }
 
-        return -1;
+        return total;
     }
 
-    public class Round {
-        public TextView tv;
-        public Button addButton;
-        public Button removeButton;
-        public int id;
+    public class Period {
+        /* Types of period */
+        public static final int ROUND = 0;
+        public static final int REST = 1;
 
-        public Round(Context context, String text){
-            tv = new TextView(context);
-            tv.setText(text);
-            addButton = new Button(context);
-            addButton.setText("+");
-            removeButton = new Button(context);
-            removeButton.setText("-");
+        public String desc;
+        public int duration;    // duration in seconds
+        public int type;
+
+        public Period (String desc, int duration, int type){
+            this.desc = desc;
+            this.duration = duration;
+            this.type = type;
+
+            // TODO: add exception when type is invalid
+        }
+
+        public Period (int duration, int type){
+            this.duration = duration;
+            this.type = type;
+
+            // TODO: add exception when type is invalid
         }
     }
 }
