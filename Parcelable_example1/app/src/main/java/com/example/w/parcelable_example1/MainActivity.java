@@ -6,17 +6,17 @@ import android.os.Bundle;
 
 public class MainActivity extends AppCompatActivity {
 
-    Parcel2 parcel2;
+    Parcel3 parcel3;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        parcel2 = new Parcel2();
+        parcel3 = new Parcel3();
 
         /* Fire the new activity */
         Intent intent = new Intent(getApplicationContext(), SecondActivity.class);
-        intent.putExtra("EXTRA_PARCEL2", parcel2);
+        intent.putExtra("EXTRA_PARCEL3", parcel3);
         startActivity(intent);
     }
 }

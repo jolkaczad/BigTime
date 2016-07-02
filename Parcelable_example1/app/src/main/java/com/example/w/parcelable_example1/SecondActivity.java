@@ -9,11 +9,7 @@ import java.util.ArrayList;
 import java.util.ListIterator;
 
 public class SecondActivity extends AppCompatActivity {
-    int parcel_a;
-    double parcel_b;
-    String parcel_c;
-
-    private ArrayList<Integer> parcel_dArrayList;
+    private ArrayList<ListItem> parcel_dArrayList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,23 +20,17 @@ public class SecondActivity extends AppCompatActivity {
 
         Bundle b = intent.getExtras();
 
-        Parcel2 parcel2 = b.getParcelable("EXTRA_PARCEL2");
+        Parcel3 parcel3 = b.getParcelable("EXTRA_PARCEL3");
 
-        parcel_a = parcel2.a;
-        parcel_b = parcel2.b;
-        parcel_c = parcel2.c;
-        parcel_dArrayList = parcel2.dArrayList;
+        parcel_dArrayList = parcel3.dArrayList;
 
         TextView textView = (TextView) findViewById(R.id.textView);
-        textView.setText(String.valueOf(parcel_a));
+        textView.setText(String.valueOf(parcel_dArrayList.get(0).x + " " + parcel_dArrayList.get(0).y + " " + parcel_dArrayList.get(0).z));
 
         textView = (TextView) findViewById(R.id.textView2);
-        textView.setText(String.valueOf(parcel_b));
+        textView.setText(String.valueOf(parcel_dArrayList.get(1).x + " " + parcel_dArrayList.get(1).y + " " + parcel_dArrayList.get(1).z));
 
         textView = (TextView) findViewById(R.id.textView3);
-        textView.setText(String.valueOf(parcel_c));
-
-        textView = (TextView) findViewById(R.id.textView4);
-        textView.setText(String.valueOf(String.valueOf(parcel_dArrayList.get(0)) + " " + String.valueOf(parcel_dArrayList.get(1))));
+        textView.setText(String.valueOf(parcel_dArrayList.get(2).x + " " + parcel_dArrayList.get(2).y + " " + parcel_dArrayList.get(2).z));
     }
 }
