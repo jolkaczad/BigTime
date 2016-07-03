@@ -6,9 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
 
-import java.util.ListIterator;
-
 public class TimerActivity extends AppCompatActivity {
+    // TODO: add fixed "preparation time" a countdown between setting up and starting the stopwatch
     long startTime = 0;
     TextView stopwatchTextView;
     private boolean stop = false;
@@ -17,22 +16,22 @@ public class TimerActivity extends AppCompatActivity {
     Runnable clockTimerRunnable = new Runnable(){
         @Override
         public void run(){
-            long millis = System.currentTimeMillis() - startTime;
-            int seconds = (int) (millis / 1000);
+            int seconds = (int) ((System.currentTimeMillis() - startTime) / 1000);
             int minutes = seconds / 60;
-            seconds = seconds % 60;
+            int tenths = (int) ((System.currentTimeMillis() - startTime) / 100);
 
-            stopwatchTextView.setText(String.format("%d:%02d", minutes, seconds));
+            seconds = seconds % 60;
+            tenths = tenths % 10;
+
+            stopwatchTextView.setText(String.format("%d:%02d.%01d", minutes, seconds, tenths));
 
             if (!stop) {
-                clockTimerHandler.postDelayed(this, 500);
+                clockTimerHandler.postDelayed(this, 50);
             }
         }
     };
 
     Handler roundTimerHandler = new Handler();
-    Runnable roundTimerRunnable;
-    ListIterator<Period> li;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

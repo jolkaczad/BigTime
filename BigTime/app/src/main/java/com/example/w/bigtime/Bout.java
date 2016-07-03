@@ -1,16 +1,10 @@
 package com.example.w.bigtime;
 
-import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.ListIterator;
-import android.util.Log;
 
 /**
  * Created by WL on 24-cze-2016
