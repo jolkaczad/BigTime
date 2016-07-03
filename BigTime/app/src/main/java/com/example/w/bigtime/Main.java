@@ -1,6 +1,8 @@
 package com.example.w.bigtime;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -52,6 +54,11 @@ public class Main extends AppCompatActivity {
                 TextView tv = (EditText)findViewById(R.id.totalET);
 
                 tv.setText(String.valueOf(bout.getBoutTime()));
+
+                /* Fire the new activity */
+                Intent intent = new Intent(getApplicationContext(), TimerActivity.class);
+                intent.putExtra("EXTRA_BOUT", bout);
+                startActivity(intent);
             }
         };
 

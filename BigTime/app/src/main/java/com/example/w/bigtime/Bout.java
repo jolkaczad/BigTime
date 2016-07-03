@@ -1,6 +1,8 @@
 package com.example.w.bigtime;
 
 import android.content.Context;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -14,10 +16,9 @@ import android.util.Log;
  * <p/>
  * Version 1.1
  */
-public class Bout {
+public class Bout implements Parcelable {
     static final String TAG = "BIGTIME_LOG";
 
-    private int rounds = 0;
     private ArrayList<Period> periodArrayList;
 
     public Bout (int roundTime, int restTime, int roundCount) {
@@ -47,28 +48,31 @@ public class Bout {
         return total;
     }
 
-    public class Period {
-        /* Types of period */
-        public static final int ROUND = 0;
-        public static final int REST = 1;
+    /* Everything below is to support implementation of Parcelable */
+    @Override
+    public int describeContents() {
+        return 0;
+    }
 
-        public String desc;
-        public int duration;    // duration in seconds
-        public int type;
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeTypedList(periodArrayList);
+    }
 
-        public Period (String desc, int duration, int type){
-            this.desc = desc;
-            this.duration = duration;
-            this.type = type;
-
-            // TODO: add exception when type is invalid
+    // this is used to regenerate your object. All Parcelables must have a CREATOR that implements these two methods
+    public static final Parcelable.Creator<Bout> CREATOR = new Parcelable.Creator<Bout>() {
+        public Bout createFromParcel(Parcel in) {
+            return new Bout(in);
         }
 
-        public Period (int duration, int type){
-            this.duration = duration;
-            this.type = type;
-
-            // TODO: add exception when type is invalid
+        public Bout[] newArray(int size) {
+            return new Bout[size];
         }
+    };
+
+    // example constructor that takes a Parcel and gives you an object populated with it's values
+    private Bout(Parcel in) {
+        periodArrayList = new ArrayList<>();
+        in.readTypedList(periodArrayList, Period.CREATOR);
     }
 }
