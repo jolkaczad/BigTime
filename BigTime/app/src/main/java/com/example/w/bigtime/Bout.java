@@ -8,18 +8,20 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ListIterator;
 import android.util.Log;
 
 /**
  * Created by WL on 24-cze-2016
  * <p/>
- * Version 1.1
+ * Version 1.2
  */
 public class Bout implements Parcelable {
     static final String TAG = "BIGTIME_LOG";
 
     private ArrayList<Period> periodArrayList;
+    private ListIterator<Period> mainListIterator = null;
 
     public Bout (int roundTime, int restTime, int roundCount) {
         periodArrayList = new ArrayList<>();
@@ -35,7 +37,7 @@ public class Bout implements Parcelable {
         periodArrayList.add(roundPeriod);
     }
 
-    public int getBoutTime (){
+    public int getTotalTime(){
         int total = 0;
 
         ListIterator<Period> li = periodArrayList.listIterator();
@@ -46,6 +48,20 @@ public class Bout implements Parcelable {
         }
 
         return total;
+    }
+
+    public Period getNextPeriod(){
+        /* Recreate the iterator when object is rebuild after parceling */
+        if (mainListIterator == null){
+            mainListIterator = periodArrayList.listIterator();
+        }
+
+        if(mainListIterator.hasNext()){
+            return mainListIterator.next();
+        }
+        else {
+            return null;
+        }
     }
 
     /* Everything below is to support implementation of Parcelable */
@@ -74,5 +90,6 @@ public class Bout implements Parcelable {
     private Bout(Parcel in) {
         periodArrayList = new ArrayList<>();
         in.readTypedList(periodArrayList, Period.CREATOR);
+        mainListIterator = null;
     }
 }

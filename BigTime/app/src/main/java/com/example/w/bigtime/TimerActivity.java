@@ -1,25 +1,71 @@
 package com.example.w.bigtime;
 
 import android.content.Intent;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.EditText;
 import android.widget.TextView;
 
+import java.util.ListIterator;
+
 public class TimerActivity extends AppCompatActivity {
+    long startTime = 0;
+    TextView stopwatchTextView;
+    private boolean stop = false;
+
+    Handler clockTimerHandler = new Handler();
+    Runnable clockTimerRunnable = new Runnable(){
+        @Override
+        public void run(){
+            long millis = System.currentTimeMillis() - startTime;
+            int seconds = (int) (millis / 1000);
+            int minutes = seconds / 60;
+            seconds = seconds % 60;
+
+            stopwatchTextView.setText(String.format("%d:%02d", minutes, seconds));
+
+            if (!stop) {
+                clockTimerHandler.postDelayed(this, 500);
+            }
+        }
+    };
+
+    Handler roundTimerHandler = new Handler();
+    Runnable roundTimerRunnable;
+    ListIterator<Period> li;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timer);
 
+        /* Getting the data from previous intent */
         Intent intent = getIntent();
-
         Bundle b = intent.getExtras();
+        final Bout bout = b.getParcelable("EXTRA_BOUT");
 
-        Bout bout = b.getParcelable("EXTRA_BOUT");
-        TextView tv = (TextView) findViewById(R.id.centerTV);
+        /* Setting up main "clock" timer */
+        stopwatchTextView = (TextView)findViewById(R.id.stopwatch);
+        startTime = System.currentTimeMillis();
+        clockTimerHandler.postDelayed(clockTimerRunnable, 0);
 
-        tv.setText(String.valueOf(bout.getBoutTime()));
+        /* Setting up "round" timer */
+        Runnable roundTimerRunnable = new Runnable(){
+            @Override
+            public void run(){
+                Period period = bout.getNextPeriod();
+
+                if (period == null){
+                    stop = true;
+                }
+                else {
+                    startTime = System.currentTimeMillis();
+
+                    roundTimerHandler.postDelayed(this, period.duration * 1000);
+                }
+            }
+        };
+
+        roundTimerHandler.postDelayed(roundTimerRunnable, 0);
     }
 }
