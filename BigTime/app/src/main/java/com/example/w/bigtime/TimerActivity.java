@@ -7,9 +7,7 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 public class TimerActivity extends AppCompatActivity {
-    // TODO: add fixed "preparation time" a countdown between setting up and starting the stopwatch
     // TODO: add two text boxes for GO and START. They should be in different colors on opposite screen sides
-    // TODO: Make sure the timer state is saved between screen rotations (or block rotations)
 
     long startTime = 0;
     TextView stopwatchTextView;
@@ -36,6 +34,8 @@ public class TimerActivity extends AppCompatActivity {
 
     Handler roundTimerHandler = new Handler();
 
+    private int tminus;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,17 +47,37 @@ public class TimerActivity extends AppCompatActivity {
         Bundle b = intent.getExtras();
         final Bout bout = b.getParcelable("EXTRA_BOUT");
 
-        if (savedInstanceState != null) {
-            // Restore value of members from saved state
-            startTime = savedInstanceState.getLong("startTime");
-        }
-        else {
-            startTime = System.currentTimeMillis();
-        }
-        /* Setting up main "clock" timer */
         stopwatchTextView = (TextView)findViewById(R.id.stopwatch);
 
-        clockTimerHandler.postDelayed(clockTimerRunnable, 0);
+//        if (savedInstanceState != null) {
+//            // Restore value of members from saved state
+//            startTime = savedInstanceState.getLong("startTime");
+//        }
+//        else {
+//
+//        }
+        startTime = System.currentTimeMillis();
+
+        /* Setting up "countdown to start" timer */
+        // TODO make t minus time configurable
+
+        tminus = 10;
+        Runnable tminusRunnable = new Runnable() {
+            @Override
+            public void run(){
+                stopwatchTextView.setText("-" + String.valueOf(tminus));
+                tminus--;
+
+                if (tminus > 0) {
+                    roundTimerHandler.postDelayed(this, 1 * 1000);
+                }
+            }
+        };
+        roundTimerHandler.postDelayed(tminusRunnable, 0);
+
+
+        /* Setting up main "clock" timer */
+        clockTimerHandler.postDelayed(clockTimerRunnable, 10 * 1000);
 
         /* Setting up "round" timer */
         Runnable roundTimerRunnable = new Runnable(){
@@ -85,6 +105,6 @@ public class TimerActivity extends AppCompatActivity {
             }
         };
 
-        roundTimerHandler.postDelayed(roundTimerRunnable, 0);
+        roundTimerHandler.postDelayed(roundTimerRunnable, 10 * 1000);
     }
 }

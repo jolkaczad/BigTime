@@ -25,7 +25,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Text"
+        android:text="Get ready"
         android:id="@+id/periodType"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"

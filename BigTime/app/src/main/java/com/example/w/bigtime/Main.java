@@ -51,6 +51,7 @@ public class Main extends AppCompatActivity {
                 TextView tv = (EditText)findViewById(R.id.totalET);
 
                 tv.setText(String.valueOf(bout.getTotalTime()));
+                // TODO: calculate time each time any of the text boxes are edited
 
                 /* Fire the new activity */
                 Intent intent = new Intent(getApplicationContext(), TimerActivity.class);
