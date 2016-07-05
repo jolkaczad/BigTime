@@ -16,11 +16,11 @@
         android:layout_height="wrap_content"
         android:text="13:37.1"
         android:id="@+id/stopwatch"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
         android:background="#000000"
         android:textColor="#ffffff"
-        android:textSize="100dp" />
+        android:textSize="150sp"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
 
     <TextView
         android:layout_width="wrap_content"

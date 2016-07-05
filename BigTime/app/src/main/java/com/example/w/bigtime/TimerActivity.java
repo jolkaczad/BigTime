@@ -8,6 +8,9 @@ import android.widget.TextView;
 
 public class TimerActivity extends AppCompatActivity {
     // TODO: add fixed "preparation time" a countdown between setting up and starting the stopwatch
+    // TODO: add two text boxes for GO and START. They should be in different colors on opposite screen sides
+    // TODO: Make sure the timer state is saved between screen rotations (or block rotations)
+
     long startTime = 0;
     TextView stopwatchTextView;
     private boolean stop = false;
@@ -36,6 +39,7 @@ public class TimerActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_timer);
 
         /* Getting the data from previous intent */
@@ -43,9 +47,16 @@ public class TimerActivity extends AppCompatActivity {
         Bundle b = intent.getExtras();
         final Bout bout = b.getParcelable("EXTRA_BOUT");
 
+        if (savedInstanceState != null) {
+            // Restore value of members from saved state
+            startTime = savedInstanceState.getLong("startTime");
+        }
+        else {
+            startTime = System.currentTimeMillis();
+        }
         /* Setting up main "clock" timer */
         stopwatchTextView = (TextView)findViewById(R.id.stopwatch);
-        startTime = System.currentTimeMillis();
+
         clockTimerHandler.postDelayed(clockTimerRunnable, 0);
 
         /* Setting up "round" timer */
@@ -61,6 +72,15 @@ public class TimerActivity extends AppCompatActivity {
                     startTime = System.currentTimeMillis();
 
                     roundTimerHandler.postDelayed(this, period.duration * 1000);
+
+                    if(period.type == Period.REST){
+                        TextView textView = (TextView)findViewById(R.id.periodType);
+                        textView.setText("REST");
+                    }
+                    else {
+                        TextView textView = (TextView)findViewById(R.id.periodType);
+                        textView.setText("GO");
+                    }
                 }
             }
         };
