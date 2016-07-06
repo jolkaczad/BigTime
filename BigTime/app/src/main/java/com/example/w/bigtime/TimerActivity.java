@@ -4,10 +4,12 @@ import android.content.Intent;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.WindowManager;
 import android.widget.TextView;
 
 public class TimerActivity extends AppCompatActivity {
     // TODO: add two text boxes for GO and START. They should be in different colors on opposite screen sides
+    // TODO: make the application really fullscreen
 
     long startTime = 0;
     TextView stopwatchTextView;
@@ -49,13 +51,6 @@ public class TimerActivity extends AppCompatActivity {
 
         stopwatchTextView = (TextView)findViewById(R.id.stopwatch);
 
-//        if (savedInstanceState != null) {
-//            // Restore value of members from saved state
-//            startTime = savedInstanceState.getLong("startTime");
-//        }
-//        else {
-//
-//        }
         startTime = System.currentTimeMillis();
 
         /* Setting up "countdown to start" timer */
@@ -75,6 +70,9 @@ public class TimerActivity extends AppCompatActivity {
         };
         roundTimerHandler.postDelayed(tminusRunnable, 0);
 
+        /* Make sure the screen is on when timer is running */
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
 
         /* Setting up main "clock" timer */
         clockTimerHandler.postDelayed(clockTimerRunnable, 10 * 1000);
@@ -87,6 +85,9 @@ public class TimerActivity extends AppCompatActivity {
 
                 if (period == null){
                     stop = true;
+
+                    /* it's okay to shut down the screen after timer has stopped */
+                    getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
                 }
                 else {
                     startTime = System.currentTimeMillis();

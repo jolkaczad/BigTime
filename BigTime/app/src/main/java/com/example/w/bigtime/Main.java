@@ -6,6 +6,8 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,6 +24,7 @@ public class Main extends AppCompatActivity {
 
     static final String TAG = "BIGTIME_LOG";
 
+    // TODO: add a round counter to the main screen
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,16 +45,7 @@ public class Main extends AppCompatActivity {
         View.OnClickListener go = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int roundTime = Integer.parseInt(((EditText)findViewById(R.id.roundTimeET)).getText().toString());
-                int restTime = Integer.parseInt(((EditText)findViewById(R.id.restTimeET)).getText().toString());
-                int roundCount = Integer.parseInt(((EditText)findViewById(R.id.roundCountET)).getText().toString());
 
-                bout = new Bout(roundTime, restTime, roundCount);
-
-                TextView tv = (EditText)findViewById(R.id.totalET);
-
-                tv.setText(String.valueOf(bout.getTotalTime()));
-                // TODO: calculate time each time any of the text boxes are edited
 
                 /* Fire the new activity */
                 Intent intent = new Intent(getApplicationContext(), TimerActivity.class);
@@ -59,6 +53,60 @@ public class Main extends AppCompatActivity {
                 startActivity(intent);
             }
         };
+
+        /* Define the event launched on text change of any EditTexts */
+        TextWatcher textWatcher = new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                int roundTime;
+                int restTime;
+                int roundCount;
+                String string;
+
+                string = ((EditText)findViewById(R.id.roundTimeET)).getText().toString();
+                if (string.isEmpty()){
+                    roundTime = 0;
+                }
+                else {
+                    roundTime = Integer.parseInt(string);
+                }
+
+                string = ((EditText)findViewById(R.id.restTimeET)).getText().toString().toString();
+                if (string.isEmpty()){
+                    restTime = 0;
+                }
+                else {
+                    restTime = Integer.parseInt(string);
+                }
+
+                string = ((EditText)findViewById(R.id.roundCountET)).getText().toString();
+                if (string.isEmpty()){
+                    roundCount = 0;
+                }
+                else {
+                    roundCount = Integer.parseInt(string);
+                }
+
+                bout = new Bout(roundTime, restTime, roundCount);
+
+                TextView tv = (EditText)findViewById(R.id.totalET);
+
+                tv.setText(String.valueOf(bout.getTotalTime()));
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        };
+        ((EditText)findViewById(R.id.roundTimeET)).addTextChangedListener(textWatcher);
+        ((EditText)findViewById(R.id.restTimeET)).addTextChangedListener(textWatcher);
+        ((EditText)findViewById(R.id.roundCountET)).addTextChangedListener(textWatcher);
 
         button = (Button)findViewById(R.id.button);
         button.setOnClickListener(go);
