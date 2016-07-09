@@ -1,5 +1,6 @@
 package com.example.w.bigtime;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -7,9 +8,10 @@ import android.os.Bundle;
 import android.view.WindowManager;
 import android.widget.TextView;
 
-public class TimerActivity extends AppCompatActivity {
+public class TimerActivity extends Activity {
     // TODO: add two text boxes for GO and START. They should be in different colors on opposite screen sides
-    // TODO: make the application really fullscreen
+    // TODO: make the application really fullscreen - check the other generated Activity of Android Studio
+    // TODO: remove the battery/clock/notifications bar from the current fullscreen implementation
 
     long startTime = 0;
     TextView stopwatchTextView;

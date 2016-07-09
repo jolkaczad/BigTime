@@ -45,12 +45,41 @@ public class Main extends AppCompatActivity {
         View.OnClickListener go = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                int roundTime;
+                int restTime;
+                int roundCount;
 
+                try {
+                    roundTime = Integer.parseInt (((EditText) findViewById(R.id.roundTimeET)).getText().toString());
+                }
+                catch (NullPointerException | NumberFormatException e){
+                    roundTime = 0;
+                }
 
-                /* Fire the new activity */
-                Intent intent = new Intent(getApplicationContext(), TimerActivity.class);
-                intent.putExtra("EXTRA_BOUT", bout);
-                startActivity(intent);
+                try {
+                    restTime = Integer.parseInt (((EditText)findViewById(R.id.restTimeET)).getText().toString());
+                }
+                catch (NullPointerException | NumberFormatException e){
+                    restTime = 0;
+                }
+
+                try {
+                    roundCount = Integer.parseInt (((EditText)findViewById(R.id.roundCountET)).getText().toString());
+                }
+                catch (NullPointerException | NumberFormatException e){
+                    roundCount = 0;
+                }
+
+                bout = new Bout(roundTime, restTime, roundCount);
+
+                /* make sure the bout time is correct, i.e. non-zero round number, no negative times */
+                if (bout.getTotalTime() > 0) {
+                    /* Fire the new activity */
+                    Intent intent = new Intent(getApplicationContext(), TimerActivity.class);
+                    intent.putExtra("EXTRA_BOUT", bout);
+                    startActivity(intent);
+                }
+
             }
         };
 
@@ -66,37 +95,33 @@ public class Main extends AppCompatActivity {
                 int roundTime;
                 int restTime;
                 int roundCount;
-                String string;
 
-                string = ((EditText)findViewById(R.id.roundTimeET)).getText().toString();
-                if (string.isEmpty()){
+                try {
+                    roundTime = Integer.parseInt (((EditText) findViewById(R.id.roundTimeET)).getText().toString());
+                }
+                catch (NullPointerException | NumberFormatException e){
                     roundTime = 0;
                 }
-                else {
-                    roundTime = Integer.parseInt(string);
-                }
 
-                string = ((EditText)findViewById(R.id.restTimeET)).getText().toString().toString();
-                if (string.isEmpty()){
+                try {
+                    restTime = Integer.parseInt (((EditText)findViewById(R.id.restTimeET)).getText().toString());
+                }
+                catch (NullPointerException | NumberFormatException e){
                     restTime = 0;
                 }
-                else {
-                    restTime = Integer.parseInt(string);
-                }
 
-                string = ((EditText)findViewById(R.id.roundCountET)).getText().toString();
-                if (string.isEmpty()){
+                try {
+                    roundCount = Integer.parseInt (((EditText)findViewById(R.id.roundCountET)).getText().toString());
+                }
+                catch (NullPointerException | NumberFormatException e){
                     roundCount = 0;
                 }
-                else {
-                    roundCount = Integer.parseInt(string);
-                }
-
-                bout = new Bout(roundTime, restTime, roundCount);
 
                 TextView tv = (EditText)findViewById(R.id.totalET);
 
-                tv.setText(String.valueOf(bout.getTotalTime()));
+                int total = Bout.calcTotalTime(roundTime, restTime, roundCount);
+
+                tv.setText(String.valueOf(total));
             }
 
             @Override

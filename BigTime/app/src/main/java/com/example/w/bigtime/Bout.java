@@ -20,15 +20,18 @@ public class Bout implements Parcelable {
     public Bout (int roundTime, int restTime, int roundCount) {
         periodArrayList = new ArrayList<>();
 
-        for (int i = 0; i < (roundCount - 1); i++){
+        for (int i = 0; i < roundCount; i++){
             Period roundPeriod = new Period(roundTime, Period.ROUND);
             Period restPeriod = new Period(restTime, Period.REST);
 
             periodArrayList.add(roundPeriod);
             periodArrayList.add(restPeriod);
         }
-        Period roundPeriod = new Period(roundTime, Period.ROUND);
-        periodArrayList.add(roundPeriod);
+
+        /* Remove the last REST period */
+        if (!periodArrayList.isEmpty()){
+            periodArrayList.remove((roundCount * 2 - 1));
+        }
     }
 
     public int getTotalTime(){
@@ -42,6 +45,21 @@ public class Bout implements Parcelable {
         }
 
         return total;
+    }
+
+    public static int calcTotalTime(int roundTime, int restTime, int roundCount){
+        int total;
+
+        if (roundCount <= 0){
+            return 0;
+        }
+        else if (roundTime <= 0){
+            return 0;
+        }
+        else {
+            total = (roundTime * roundCount) + (restTime * (roundCount - 1));
+            return total;
+        }
     }
 
     public Period getNextPeriod(){
