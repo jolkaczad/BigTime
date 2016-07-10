@@ -8,7 +8,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.w.bigtime.TimerActivity"
-    android:background="#000000">
+    android:background="#2f2f2f">
 
 
     <TextView
@@ -18,7 +18,7 @@
         android:id="@+id/stopwatch"
         android:background="#000000"
         android:textColor="#ffffff"
-        android:textSize="150sp"
+        android:textSize="160sp"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
 
@@ -31,4 +31,5 @@
         android:layout_centerHorizontal="true"
         android:textSize="30dp"
         android:textColor="#9b9b9b" />
+
 </RelativeLayout>

@@ -37,7 +37,9 @@
         android:layout_below="@+id/textView"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:text="120" />
+        android:text="120"
+        android:layout_alignRight="@+id/restTimeET"
+        android:layout_alignEnd="@+id/restTimeET" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -57,7 +59,9 @@
         android:layout_below="@+id/textView2"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:text="30" />
+        android:text="30"
+        android:layout_alignRight="@+id/roundCountET"
+        android:layout_alignEnd="@+id/roundCountET" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -85,9 +89,11 @@
         android:layout_height="wrap_content"
         android:text="Start"
         android:id="@+id/button"
-        android:layout_below="@+id/textView4"
+        android:layout_below="@+id/totalET"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_alignRight="@+id/roundCountET"
+        android:layout_alignEnd="@+id/roundCountET" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -96,16 +102,17 @@
         android:id="@+id/textView4"
         android:layout_below="@+id/roundCountET"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="35dp" />
+        android:layout_alignParentStart="true" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/totalET"
         android:inputType="none"
-        android:layout_above="@+id/button"
-        android:layout_alignRight="@+id/textView3"
-        android:layout_alignEnd="@+id/textView3" />
+        android:layout_below="@+id/textView4"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignRight="@+id/button"
+        android:layout_alignEnd="@+id/button" />
 
 </RelativeLayout>
