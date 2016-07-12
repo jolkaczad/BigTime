@@ -16,6 +16,8 @@ public class TimerActivity extends Activity {
     long startTime = 0;
     TextView stopwatchTextView;
     private boolean stop = false;
+    RectProgressView rectProgressView;
+    private int active = 0;
 
     Handler clockTimerHandler = new Handler();
     Runnable clockTimerRunnable = new Runnable(){
@@ -57,6 +59,9 @@ public class TimerActivity extends Activity {
         final Bout bout = b.getParcelable("EXTRA_BOUT");
 
         stopwatchTextView = (TextView)findViewById(R.id.stopwatch);
+        rectProgressView = (RectProgressView)findViewById(R.id.rectProgress);
+
+        rectProgressView.setActive(0);
 
         startTime = System.currentTimeMillis();
 
@@ -108,6 +113,10 @@ public class TimerActivity extends Activity {
                     else {
                         TextView textView = (TextView)findViewById(R.id.periodType);
                         textView.setText("GO");
+
+                        active++;
+                        rectProgressView.setActive(active);
+                        rectProgressView.refreshDrawableState();
                     }
                 }
             }
@@ -115,6 +124,8 @@ public class TimerActivity extends Activity {
 
         roundTimerHandler.postDelayed(roundTimerRunnable, 10 * 1000);
 
-        View v = findViewById(R.id.rectProgressView);
+        RectProgressView rpv = (RectProgressView)findViewById(R.id.rectProgress);
+        rpv.setCounts(bout.getRoundCount());
+
     }
 }

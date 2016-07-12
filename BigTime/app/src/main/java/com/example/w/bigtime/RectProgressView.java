@@ -35,7 +35,7 @@ public class RectProgressView extends View {
         paint = new Paint();
         paint.setColor(Color.CYAN);
 
-        counts = 5;
+        counts = 1;
     }
 
     public void setCounts(int counts){
@@ -44,9 +44,10 @@ public class RectProgressView extends View {
 
     public void setActive(int active){
         this.active = active;
+        invalidate();
     }
 
-
+    // TODO: make progress bar blink the most recent element
     @Override
     public void onDraw(Canvas canvas){
         int w;
@@ -67,11 +68,15 @@ public class RectProgressView extends View {
 
         // left top right bottom
         for (int i = 0; i < counts; i++){
+            if (i < active){
+                paint.setColor(Color.CYAN);
+            }
+            else {
+                paint.setColor(Color.GREEN);
+            }
             canvas.drawRect(x0, y0, x1, y1, paint);
             x0 += w;
             x1 += w;
         }
-
-
     }
 }

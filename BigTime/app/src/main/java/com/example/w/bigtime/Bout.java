@@ -17,6 +17,8 @@ public class Bout implements Parcelable {
     private ArrayList<Period> periodArrayList;
     private ListIterator<Period> mainListIterator = null;
 
+    private int roundCount;
+
     public Bout (int roundTime, int restTime, int roundCount) {
         periodArrayList = new ArrayList<>();
 
@@ -32,6 +34,8 @@ public class Bout implements Parcelable {
         if (!periodArrayList.isEmpty()){
             periodArrayList.remove((roundCount * 2 - 1));
         }
+
+        this.roundCount = roundCount;
     }
 
     public int getTotalTime(){
@@ -76,6 +80,10 @@ public class Bout implements Parcelable {
         }
     }
 
+    public int getRoundCount() {
+        return roundCount;
+    }
+
     /* Everything below is to support implementation of Parcelable */
     @Override
     public int describeContents() {
@@ -85,6 +93,7 @@ public class Bout implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeTypedList(periodArrayList);
+        dest.writeInt(roundCount);
     }
 
     // this is used to regenerate your object. All Parcelables must have a CREATOR that implements these two methods
@@ -102,6 +111,7 @@ public class Bout implements Parcelable {
     private Bout(Parcel in) {
         periodArrayList = new ArrayList<>();
         in.readTypedList(periodArrayList, Period.CREATOR);
+        roundCount = in.readInt();
         mainListIterator = null;
     }
 }

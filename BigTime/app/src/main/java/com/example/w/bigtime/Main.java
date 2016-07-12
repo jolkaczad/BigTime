@@ -9,8 +9,6 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -22,7 +20,6 @@ public class Main extends AppCompatActivity {
 
     static final String TAG = "BIGTIME_LOG";
 
-    // TODO: add a round counter to the main screen
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,7 +66,6 @@ public class Main extends AppCompatActivity {
                     intent.putExtra("EXTRA_BOUT", bout);
                     startActivity(intent);
                 }
-
             }
         };
 
@@ -126,6 +122,9 @@ public class Main extends AppCompatActivity {
 
         button = (Button)findViewById(R.id.button);
         button.setOnClickListener(go);
+
+        /* Simulate an EditText change to force calculation of Total time */
+        ((EditText)findViewById(R.id.roundTimeET)).setText(((EditText)findViewById(R.id.roundTimeET)).getText());
     }
 
     @Override
