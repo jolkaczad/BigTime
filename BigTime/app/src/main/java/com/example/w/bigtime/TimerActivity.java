@@ -11,7 +11,6 @@ import android.view.WindowManager;
 import android.widget.TextView;
 
 public class TimerActivity extends Activity {
-    // TODO: add two text boxes for GO and START. They should be in different colors on opposite screen sides
 
     long startTime = 0;
     TextView stopwatchTextView;
@@ -40,6 +39,8 @@ public class TimerActivity extends Activity {
 
     Handler roundTimerHandler = new Handler();
 
+    // TODO make tminus_max time configurable
+    private static final int tminus_max = 3;
     private int tminus;
 
     @Override
@@ -66,9 +67,9 @@ public class TimerActivity extends Activity {
         startTime = System.currentTimeMillis();
 
         /* Setting up "countdown to start" timer */
-        // TODO make t minus time configurable
 
-        tminus = 10;
+
+        tminus = tminus_max;
         Runnable tminusRunnable = new Runnable() {
             @Override
             public void run(){
@@ -87,7 +88,7 @@ public class TimerActivity extends Activity {
 
 
         /* Setting up main "clock" timer */
-        clockTimerHandler.postDelayed(clockTimerRunnable, 10 * 1000);
+        clockTimerHandler.postDelayed(clockTimerRunnable, tminus_max * 1000);
 
         /* Setting up "round" timer */
         Runnable roundTimerRunnable = new Runnable(){
@@ -116,16 +117,14 @@ public class TimerActivity extends Activity {
 
                         active++;
                         rectProgressView.setActive(active);
-                        rectProgressView.refreshDrawableState();
                     }
                 }
             }
         };
 
-        roundTimerHandler.postDelayed(roundTimerRunnable, 10 * 1000);
+        roundTimerHandler.postDelayed(roundTimerRunnable, tminus_max * 1000);
 
         RectProgressView rpv = (RectProgressView)findViewById(R.id.rectProgress);
         rpv.setCounts(bout.getRoundCount());
-
     }
 }
