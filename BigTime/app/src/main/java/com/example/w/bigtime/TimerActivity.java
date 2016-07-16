@@ -24,12 +24,10 @@ public class TimerActivity extends Activity {
         public void run(){
             int seconds = (int) ((System.currentTimeMillis() - startTime) / 1000);
             int minutes = seconds / 60;
-            int tenths = (int) ((System.currentTimeMillis() - startTime) / 100);
 
             seconds = seconds % 60;
-            tenths = tenths % 10;
 
-            stopwatchTextView.setText(String.format("%d:%02d.%01d", minutes, seconds, tenths));
+            stopwatchTextView.setText(String.format("%d:%02d", minutes, seconds));
 
             if (!stop) {
                 clockTimerHandler.postDelayed(this, 50);
@@ -108,12 +106,12 @@ public class TimerActivity extends Activity {
                     roundTimerHandler.postDelayed(this, period.duration * 1000);
 
                     if(period.type == Period.REST){
-                        TextView textView = (TextView)findViewById(R.id.periodType);
-                        textView.setText("REST");
+//                        TextView textView = (TextView)findViewById(R.id.periodType);
+//                        textView.setText("REST");
                     }
                     else {
-                        TextView textView = (TextView)findViewById(R.id.periodType);
-                        textView.setText("GO");
+//                        TextView textView = (TextView)findViewById(R.id.periodType);
+//                        textView.setText("GO");
 
                         active++;
                         rectProgressView.setActive(active);
